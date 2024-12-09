@@ -1,5 +1,6 @@
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
+import { motion } from "framer-motion";
 
 interface Stat {
   name: string;
@@ -14,28 +15,41 @@ interface StatusCardProps {
 
 export const StatusCard = ({ level, stats }: StatusCardProps) => {
   return (
-    <Card className="w-full p-6 bg-solo-dark border-solo-accent">
-      <div className="flex justify-between items-center mb-6">
+    <Card className="w-full p-6 bg-solo-dark/50 backdrop-blur-lg border-solo-accent/20">
+      <div className="flex justify-between items-center mb-8">
         <h2 className="text-2xl font-bold text-solo-text">Status Window</h2>
-        <span className="text-solo-accent animate-status-pulse">
+        <motion.span 
+          className="text-solo-accent text-xl font-bold px-4 py-2 rounded-full bg-solo-primary/30 border border-solo-accent/20"
+          animate={{ scale: [1, 1.05, 1] }}
+          transition={{ duration: 2, repeat: Infinity }}
+        >
           Level {level}
-        </span>
+        </motion.span>
       </div>
-      <div className="space-y-4">
-        {stats.map((stat) => (
-          <div key={stat.name} className="space-y-2">
-            <div className="flex justify-between">
-              <span className="text-solo-text">{stat.name}</span>
+      <div className="space-y-6">
+        {stats.map((stat, index) => (
+          <motion.div 
+            key={stat.name}
+            initial={{ x: -20, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ delay: index * 0.1 }}
+            className="space-y-2"
+          >
+            <div className="flex justify-between items-center">
+              <span className="text-solo-text font-medium">{stat.name}</span>
               <span className="text-solo-accent">
                 {stat.value}/{stat.maxValue}
               </span>
             </div>
-            <Progress
-              value={(stat.value / stat.maxValue) * 100}
-              className="h-2 bg-solo-primary"
-              indicatorClassName="bg-solo-accent"
-            />
-          </div>
+            <div className="relative">
+              <Progress
+                value={(stat.value / stat.maxValue) * 100}
+                className="h-2 bg-solo-primary/30"
+                indicatorClassName="bg-gradient-to-r from-solo-accent to-solo-highlight"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-solo-accent/10 to-transparent animate-pulse" />
+            </div>
+          </motion.div>
         ))}
       </div>
     </Card>

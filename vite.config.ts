@@ -5,7 +5,7 @@ import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  base: "./", // Add this line to fix GitHub Pages deployment
+  base: mode === 'production' ? '/leveling-up-fitness/' : '/',
   server: {
     host: "::",
     port: 8080,

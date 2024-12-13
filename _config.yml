@@ -1,0 +1,10 @@
+baseurl: "/leveling-up-fitness"
+url: ""
+exclude: [
+  "node_modules",
+  "*.config.js",
+  "package*.json",
+  "src",
+  "vite.config.ts",
+  "tsconfig.json"
+]

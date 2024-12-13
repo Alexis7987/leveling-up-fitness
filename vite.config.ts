@@ -8,14 +8,17 @@ export default defineConfig(({ mode }) => ({
   build: {
     outDir: 'docs',
     sourcemap: true,
-    emptyOutDir: true,
+    emptyOutDir: false, // Changed to false to preserve Jekyll files
     minify: 'esbuild',
     rollupOptions: {
       output: {
         manualChunks: undefined,
-        assetFileNames: 'assets/[name].[ext]',
-        chunkFileNames: 'assets/[name].[hash].js',
-        entryFileNames: 'assets/[name].[hash].js',
+        assetFileNames: (assetInfo) => {
+          if (assetInfo.name === 'style.css') return 'assets/css/[name].[ext]';
+          return 'assets/[name].[ext]';
+        },
+        chunkFileNames: 'assets/js/[name].[hash].js',
+        entryFileNames: 'assets/js/[name].[hash].js',
       },
     },
   },
@@ -25,8 +28,7 @@ export default defineConfig(({ mode }) => ({
   },
   plugins: [
     react(),
-    mode === 'development' &&
-    componentTagger(),
+    mode === 'development' && componentTagger(),
   ].filter(Boolean),
   resolve: {
     alias: {

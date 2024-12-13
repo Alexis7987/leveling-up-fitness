@@ -5,6 +5,9 @@ import { componentTagger } from "lovable-tagger";
 
 export default defineConfig(({ mode }) => ({
   base: mode === 'production' ? '/leveling-up-fitness/' : '/',
+  build: {
+    outDir: 'docs', // GitHub Pages va chercher dans le dossier /docs
+  },
   server: {
     host: "::",
     port: 8080,

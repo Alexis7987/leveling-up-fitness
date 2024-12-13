@@ -9,10 +9,13 @@ export default defineConfig(({ mode }) => ({
     outDir: 'docs',
     sourcemap: true,
     emptyOutDir: true,
-    minify: true,
+    minify: 'esbuild',
     rollupOptions: {
       output: {
         manualChunks: undefined,
+        assetFileNames: 'assets/[name].[ext]',
+        chunkFileNames: 'assets/[name].[hash].js',
+        entryFileNames: 'assets/[name].[hash].js',
       },
     },
   },
@@ -33,5 +36,6 @@ export default defineConfig(({ mode }) => ({
   esbuild: {
     logLevel: 'info',
     treeShaking: true,
+    target: 'es2020',
   }
 }));

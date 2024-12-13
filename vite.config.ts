@@ -8,7 +8,13 @@ export default defineConfig(({ mode }) => ({
   build: {
     outDir: 'docs',
     sourcemap: true,
-    emptyOutDir: true
+    emptyOutDir: true,
+    minify: true,
+    rollupOptions: {
+      output: {
+        manualChunks: undefined,
+      },
+    },
   },
   server: {
     host: "::",
@@ -24,4 +30,8 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  esbuild: {
+    logLevel: 'info',
+    treeShaking: true,
+  }
 }));

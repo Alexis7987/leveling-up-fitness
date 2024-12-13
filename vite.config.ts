@@ -4,18 +4,17 @@ import path from "path";
 import { componentTagger } from "lovable-tagger";
 
 export default defineConfig(({ mode }) => ({
-  base: mode === 'production' ? '/leveling-up-fitness/' : '/',
+  base: '/leveling-up-fitness/',
   build: {
     outDir: 'docs',
     sourcemap: true,
-    emptyOutDir: false, // Changed to false to preserve Jekyll files
-    minify: 'esbuild',
+    emptyOutDir: true,
     rollupOptions: {
       output: {
         manualChunks: undefined,
         assetFileNames: (assetInfo) => {
-          if (assetInfo.name === 'style.css') return 'assets/css/[name].[ext]';
-          return 'assets/[name].[ext]';
+          if (assetInfo.name === 'index.css') return 'assets/css/[name].[hash].[ext]';
+          return 'assets/[name].[hash].[ext]';
         },
         chunkFileNames: 'assets/js/[name].[hash].js',
         entryFileNames: 'assets/js/[name].[hash].js',
@@ -35,9 +34,4 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-  esbuild: {
-    logLevel: 'info',
-    treeShaking: true,
-    target: 'es2020',
-  }
 }));

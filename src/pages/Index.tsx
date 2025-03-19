@@ -1,8 +1,11 @@
+
 import { StatusCard } from "@/components/StatusCard";
 import { ExerciseList } from "@/components/ExerciseList";
 import { StatProgress } from "@/components/StatProgress";
 import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 const Index = () => {
   const playerStats = {
@@ -61,6 +64,21 @@ const Index = () => {
             Hunter Status
           </motion.h1>
           <p className="text-solo-text/70">Arise and conquer your fitness goals</p>
+          
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5 }}
+            className="mt-6"
+          >
+            <Link to="/donation">
+              <Button 
+                className="bg-gradient-to-r from-solo-accent to-solo-highlight hover:opacity-90"
+              >
+                Soutenir le créateur
+              </Button>
+            </Link>
+          </motion.div>
         </header>
 
         <div className="grid md:grid-cols-2 gap-8">

@@ -6,6 +6,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { ShoppingBag, DollarSign, Users, ArrowRight } from "lucide-react";
 
 const Index = () => {
   const playerStats = {
@@ -46,6 +47,30 @@ const Index = () => {
     },
   ];
 
+  const features = [
+    {
+      title: "Boutique",
+      description: "Découvrez nos programmes d'entraînement exclusifs",
+      icon: <ShoppingBag className="h-6 w-6 text-solo-highlight" />,
+      link: "/shop",
+      color: "from-blue-500 to-purple-600"
+    },
+    {
+      title: "Programme d'Affiliation",
+      description: "Gagnez de l'argent en partageant avec vos amis",
+      icon: <DollarSign className="h-6 w-6 text-solo-highlight" />,
+      link: "/affiliate",
+      color: "from-green-500 to-emerald-600"
+    },
+    {
+      title: "Soutenir le Projet",
+      description: "Contribuez au développement de nouvelles fonctionnalités",
+      icon: <Users className="h-6 w-6 text-solo-highlight" />,
+      link: "/donation",
+      color: "from-orange-500 to-red-600"
+    },
+  ];
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-solo-dark to-black p-4 md:p-8">
       <motion.div 
@@ -64,21 +89,6 @@ const Index = () => {
             Hunter Status
           </motion.h1>
           <p className="text-solo-text/70">Arise and conquer your fitness goals</p>
-          
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5 }}
-            className="mt-6"
-          >
-            <Link to="/donation">
-              <Button 
-                className="bg-gradient-to-r from-solo-accent to-solo-highlight hover:opacity-90"
-              >
-                Soutenir le créateur
-              </Button>
-            </Link>
-          </motion.div>
         </header>
 
         <div className="grid md:grid-cols-2 gap-8">
@@ -121,6 +131,42 @@ const Index = () => {
           transition={{ delay: 0.4 }}
         >
           <ExerciseList exercises={dailyExercises} />
+        </motion.div>
+
+        {/* Nouvelles fonctionnalités mises en avant */}
+        <motion.div
+          initial={{ y: 50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.5 }}
+          className="mt-12"
+        >
+          <h2 className="text-2xl font-bold text-solo-text text-center mb-8">Découvrez nos fonctionnalités</h2>
+          <div className="grid md:grid-cols-3 gap-6">
+            {features.map((feature, index) => (
+              <motion.div
+                key={index}
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.6 + index * 0.1 }}
+              >
+                <Link to={feature.link} className="block h-full">
+                  <Card className="p-6 h-full bg-solo-dark/50 backdrop-blur-lg border-solo-accent/20 hover:bg-solo-primary/30 transition-all duration-300 flex flex-col">
+                    <div className={`p-3 rounded-full bg-gradient-to-r ${feature.color} w-fit mb-4`}>
+                      {feature.icon}
+                    </div>
+                    <h3 className="text-xl font-bold text-solo-text mb-2">{feature.title}</h3>
+                    <p className="text-solo-text/70 mb-4 flex-grow">{feature.description}</p>
+                    <Button 
+                      variant="ghost" 
+                      className="mt-auto justify-start p-0 hover:bg-transparent hover:text-solo-highlight"
+                    >
+                      En savoir plus <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
+                  </Card>
+                </Link>
+              </motion.div>
+            ))}
+          </div>
         </motion.div>
       </motion.div>
     </div>
